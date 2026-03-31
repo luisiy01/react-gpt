@@ -1,4 +1,4 @@
-import { GptMessage, MyMessage } from "../../components"
+import { GptMessage, MyMessage, TypingLoader } from "../../components"
 
 
 export const OrthographyPage = () => {
@@ -10,6 +10,9 @@ export const OrthographyPage = () => {
                     {/* Bienvenida */}
                     <GptMessage text="Hola, puedes escribit tu texto" />
                     <MyMessage text="Hola Mundo" />
+
+                    <TypingLoader className="fade-in" />
+
 
                 </div>
             </div>
