@@ -1,5 +1,4 @@
-import { GptMessage } from "../../components"
-import { MyMessage } from "../../components/chat-bubbles/MyMessage"
+import { GptMessage, MyMessage } from "../../components"
 
 
 export const OrthographyPage = () => {
