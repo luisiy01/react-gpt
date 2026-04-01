@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { GptMessage, MyMessage, TextMessageBoxFile, TypingLoader } from "../../components"
+import { audioToTextUseCase } from "../../../core/use-cases";
 
 interface Message {
     text: string;
@@ -11,13 +12,21 @@ export const AudioToTextPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
 
-    const handlePost = async (text: string) => {
+    const handlePost = async (text: string, audioFile: File) => {
         setIsLoading(true);
         setMessages(prev => [...prev, { text, isGpt: false }]);
 
-        // TODO: 
+        const resp = await audioToTextUseCase(text, audioFile);
 
         setIsLoading(false);
+
+        if (resp.ok) {
+            setMessages(prev => [...prev, { text: resp.text, isGpt: true }]);
+        } else {
+            setMessages(prev => [...prev, { text: 'No se pudo realizar la correción', isGpt: true }]);
+        }
+
+
     }
 
     return (
@@ -52,6 +61,7 @@ export const AudioToTextPage = () => {
                 onSendMessage={handlePost}
                 placeholder="Escribe aqui tu pregunta"
                 disableCorrections
+                accept="audio/*"
             />
         </div>
     )
