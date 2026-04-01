@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { GptMessage, MyMessage, TextMessageBox, TextMessageBoxSelect, TypingLoader } from "../../components"
+import { GptMessage, GptMessageAudio, MyMessage, TextMessageBox, TextMessageBoxSelect, TypingLoader } from "../../components"
+import { textToAudioUseCase } from "../../../core/use-cases";
 
 const disclaimer = `## ¿Que audio quieres generar hoy?
 * Todo el audio generado es por IA`
@@ -13,10 +14,20 @@ const voices = [
     { id: "shimmer", text: "Shimmer" },
 ]
 
-interface Message {
+interface TextMessage {
     text: string;
     isGpt: boolean;
+    type: 'text'
 }
+
+interface AudioMessage {
+    text: string;
+    audioUrl: string;
+    isGpt: boolean;
+    type: 'audio'
+}
+
+type Message = TextMessage | AudioMessage;
 
 export const TextToAudioPage = () => {
 
@@ -25,11 +36,18 @@ export const TextToAudioPage = () => {
 
     const handlePost = async (text: string, selectedVoice: string) => {
         setIsLoading(true);
-        setMessages(prev => [...prev, { text, isGpt: false }]);
+        setMessages(prev => [...prev, { text, isGpt: false, type: 'text' }]);
 
-        // TODO: 
+        const { ok, audioUrl, message } = await textToAudioUseCase(text, selectedVoice);
 
         setIsLoading(false);
+
+        if (!ok) return;
+
+        setMessages(prev => [...prev, { text: `${selectedVoice} - ${message}`, audioUrl: audioUrl!, isGpt: true, type: 'audio' }]);
+
+
+
     }
 
     return (
@@ -42,7 +60,11 @@ export const TextToAudioPage = () => {
 
                     {messages.map((message, index) => (
                         message.isGpt ? (
-                            <GptMessage key={index} text={message.text} />
+
+                            message.type === 'audio'
+                                ? <GptMessageAudio key={index} text={message.text} audioUrl={message.audioUrl} />
+                                : <GptMessage key={index} text={message.text} />
+
                         ) : (
                             <MyMessage key={index} text={message.text} />
                         )
