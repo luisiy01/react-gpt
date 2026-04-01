@@ -16,16 +16,13 @@ export const AudioToTextPage = () => {
         setIsLoading(true);
         setMessages(prev => [...prev, { text, isGpt: false }]);
 
-        const resp = await audioToTextUseCase(text, audioFile);
+        const resp = await audioToTextUseCase(audioFile, text);
 
         setIsLoading(false);
 
-        if (resp.ok) {
-            setMessages(prev => [...prev, { text: resp.text, isGpt: true }]);
-        } else {
-            setMessages(prev => [...prev, { text: 'No se pudo realizar la correción', isGpt: true }]);
-        }
+        if (!resp) return
 
+        console.log({ resp })
 
     }
 

@@ -1,20 +1,24 @@
+import type { AudioToTextResponse } from "../../interfaces";
 import type { OrthographyResponse } from "../../interfaces/orthography.response";
 
-export const audioToTextUseCase = async (prompt?: string, audioFile: File) => {
+export const audioToTextUseCase = async (audioFile: File, prompt?: string) => {
 
     try {
 
+        const formData = new FormData();
+        formData.append('file', audioFile);
+        if (prompt) {
+            formData.append('prompt', prompt);
+        }
+
         const resp = await fetch(`${import.meta.env.VITE_GPT_API}/audio-to-text`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            body: JSON.stringify({ prompt })
+            body: formData
         });
 
         if (!resp.ok) throw new Error('No se pudo realizar la correción');
 
-        const data = await resp.json() as OrthographyResponse;
+        const data = await resp.json() as AudioToTextResponse;
 
         return {
             ok: true,
@@ -22,12 +26,7 @@ export const audioToTextUseCase = async (prompt?: string, audioFile: File) => {
         }
 
     } catch (error) {
-
-        return {
-            ok: false,
-            userScore: 0,
-            errors: [],
-            message: 'No se pudo realizar la correción'
-        }
+        console.log(error);
+        return null
     }
 }
