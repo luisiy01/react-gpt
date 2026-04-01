@@ -22,7 +22,21 @@ export const AudioToTextPage = () => {
 
         if (!resp) return
 
-        console.log({ resp })
+        const gptMessage = `
+        ## Transcripcion:
+        __Duracion: ${Math.round(resp.duration)} segundos
+        ## Texto:
+        ${resp.text}`
+
+        setMessages(prev => [...prev, { text: gptMessage, isGpt: true }]);
+
+        for (const segment of resp.segments) {
+            const message = `
+            __De ${Math.round(segment.start)} a ${Math.round(segment.end)} segundos:__
+            ${segment.text}
+            `
+            setMessages(prev => [...prev, { text: message, isGpt: true }]);
+        }
 
     }
 
@@ -38,7 +52,7 @@ export const AudioToTextPage = () => {
                         message.isGpt ? (
                             <GptMessage key={index} text={message.text} />
                         ) : (
-                            <MyMessage key={index} text={message.text} />
+                            <MyMessage key={index} text={(message.text === '') ? 'Transcribe el audio' : message.text} />
                         )
                     ))}
 
