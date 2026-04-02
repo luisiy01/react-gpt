@@ -25,13 +25,15 @@ export const ImageTunningPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const [originalImageAndMask, setOriginalImageAndMask] = useState({
-    original: "http://localhost:3000/gpt/image-generation/1775135355432.png",
+    original: undefined as string | undefined,
     mask: undefined as string | undefined,
   });
 
   const handleGenerateVariation = async () => {
     setIsLoading(true);
-    const response = await imageVariationUseCase(originalImageAndMask.original);
+    const response = await imageVariationUseCase(
+      originalImageAndMask.original!,
+    );
     setIsLoading(false);
     if (!response) {
       return setMessages((prev) => [
@@ -102,9 +104,14 @@ export const ImageTunningPage = () => {
               message.isGpt ? (
                 <GptMessageImage
                   key={index}
-                  text={message.text}
                   imageUrl={message.info?.imageUrl || ""}
                   alt={message.info?.alt || ""}
+                  onSelectedImage={(url) =>
+                    setOriginalImageAndMask({
+                      original: url,
+                      mask: undefined,
+                    })
+                  }
                 />
               ) : (
                 <MyMessage key={index} text={message.text} />
