@@ -94,7 +94,7 @@ export const ImageTunningPage = () => {
           <span>Editando</span>
           <img
             className="border rounded-xl w-36 h-36 object-contain"
-            src={originalImageAndMask.original}
+            src={originalImageAndMask.mask ?? originalImageAndMask.original}
             alt="Original"
           />
           <button
@@ -118,10 +118,10 @@ export const ImageTunningPage = () => {
                   key={index}
                   imageUrl={message.info?.imageUrl || ""}
                   alt={message.info?.alt || ""}
-                  onSelectedImage={(url) =>
+                  onImageSelected={(maskImageUrl) =>
                     setOriginalImageAndMask({
-                      original: url,
-                      mask: undefined,
+                      original: message.info?.imageUrl || "",
+                      mask: maskImageUrl,
                     })
                   }
                 />
