@@ -5,7 +5,10 @@ import {
   TextMessageBox,
   TypingLoader,
 } from "../../components";
-import { createThreadUseCase } from "../../../core/use-cases";
+import {
+  createThreadUseCase,
+  postQuestionUseCase,
+} from "../../../core/use-cases";
 
 interface Message {
   text: string;
@@ -40,10 +43,12 @@ export const AssistantPage = () => {
   }, [threadId]);
 
   const handlePost = async (text: string) => {
+    if (!threadId) return;
+
     setIsLoading(true);
     setMessages((prev) => [...prev, { text, isGpt: false }]);
 
-    // TODO:
+    const replies = await postQuestionUseCase(threadId, text);
 
     setIsLoading(false);
   };
