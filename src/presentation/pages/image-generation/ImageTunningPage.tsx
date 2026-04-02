@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   GptMessage,
   GptMessageImage,
+  GptMessageSelectableImage,
   MyMessage,
   TextMessageBox,
   TypingLoader,
@@ -22,7 +23,17 @@ interface Message {
 
 export const ImageTunningPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      isGpt: true,
+      text: "Imagen Base",
+      info: {
+        imageUrl:
+          "http://localhost:3000/gpt/image-generation/1775136431605.png",
+        alt: "Imagen Base",
+      },
+    },
+  ]);
 
   const [originalImageAndMask, setOriginalImageAndMask] = useState({
     original: undefined as string | undefined,
@@ -102,7 +113,8 @@ export const ImageTunningPage = () => {
 
             {messages.map((message, index) =>
               message.isGpt ? (
-                <GptMessageImage
+                //<GptMessageImage
+                <GptMessageSelectableImage
                   key={index}
                   imageUrl={message.info?.imageUrl || ""}
                   alt={message.info?.alt || ""}
