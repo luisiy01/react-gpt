@@ -51,6 +51,18 @@ export const AssistantPage = () => {
     const replies = await postQuestionUseCase(threadId, text);
 
     setIsLoading(false);
+
+    for (const reply of replies) {
+      for (const content of reply.content) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            text: content,
+            isGpt: reply.role === "assistant",
+          },
+        ]);
+      }
+    }
   };
 
   return (
