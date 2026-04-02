@@ -66,7 +66,9 @@ export const ImageTunningPage = () => {
     setIsLoading(true);
     setMessages((prev) => [...prev, { text, isGpt: false }]);
 
-    const imageInfo = await imageGenerationUseCase(text);
+    const { original, mask } = originalImageAndMask;
+
+    const imageInfo = await imageGenerationUseCase(text, original, mask);
 
     setIsLoading(false);
 
