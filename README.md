@@ -1,73 +1,39 @@
-# React + TypeScript + Vite
+# React GPT & NestJS Backend - Full-Stack AI Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, high-performance Full-Stack application that provides a sophisticated interface for interacting with OpenAI's large language models. This project demonstrates a decoupled architecture with a React-based frontend and a robust NestJS backend, optimized for scalability and production-ready AI integrations.
 
-Currently, two official plugins are available:
+## 🔗 Repository Links
+- **Frontend (React):** [https://github.com/luisiy01/react-gpt](https://github.com/luisiy01/react-gpt)
+- **Backend (NestJS):** [https://github.com/luisiy01/nest-gpt](https://github.com/luisiy01/nest-gpt)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **End-to-End Type Safety:** Fully implemented with TypeScript across the entire stack.
+- **Enterprise-Grade Backend:** Built with NestJS for a modular, maintainable, and testable server-side architecture.
+- **Advanced AI Interaction:** Supports real-time streaming, conversation history, and system prompt customization.
+- **Responsive & Modern UI:** A fluid React interface designed for both desktop and mobile accessibility.
+- **Secure Integration:** Backend-mediated API calls to protect sensitive OpenAI credentials.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Frontend (React-GPT)
+- **Framework:** React.js with Vite
+- **Language:** TypeScript
+- **State Management:** Context API / Custom Hooks
+- **Styling:** Tailwind CSS (or preferred CSS framework)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Backend (Nest-GPT)
+- **Framework:** NestJS
+- **Language:** TypeScript
+- **AI Integration:** OpenAI SDK
+- **Environment Management:** @nestjs/config for secure variable handling
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🔧 Installation & Setup
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 1. Backend Setup (NestJS)
+```bash
+git clone [https://github.com/luisiy01/nest-gpt.git](https://github.com/luisiy01/nest-gpt.git)
+cd nest-gpt
+npm install
